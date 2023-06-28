@@ -1,0 +1,48 @@
+#! /bin/sh
+
+# autostart
+dunst &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+~/.local/bin/ncmpcpp_notify.sh &
+xrandr -r 60 &
+pgrep -x sxhkd > /dev/null || sxhkd &
+xsetroot -cursor_name left_ptr &
+picom --experimental-backends &
+nitrogen --set-scaled ~/Pictures/wallpapers/rosepine.png &
+~/Downloads/legion-kb-rgb load-profile --path ~/Downloads/grey &
+libinput-gestures-setup stop desktop autostart start &
+kitty -e scratchtermtoggle &
+
+bspc monitor -d I II III IV V VI VII VIII IX X
+#bsp-layout set even I
+#bsp-layout set even II
+#bsp-layout set even III
+#bsp-layout set even IV
+#bsp-layout set even V
+#bsp-layout set even VI
+#bsp-layout set even VII
+#bsp-layout set even VIII
+#bsp-layout set even IX
+#bsp-layout set even X
+
+# window decorations
+bspc config border_width         3
+bspc config window_gap          12
+bspc config focused_border_color "#9ccfd8"
+bspc config normal_border_color "#6e6a86"
+bspc config active_border_color "#7ccdfd"
+bspc config presel-feedback_color "#fc9d63"
+
+bspc config focus_follows_pointer true
+bspc config pointer_follows_focus false
+bspc config pointer_motion_interval 7ms
+
+bspc config split_ratio          0.5
+bspc config borderless_monocle   false
+bspc config gapless_monocle      true
+
+bspc rule -a scratchterm sticky=on state=floating hidden=on
+bspc rule -a Rice-manager.py state=floating sticky
+bspc rule -a rice-manager.py state=floating sticke
+
+xss-lock --transfer-sleep-lock -- betterlockscreen -l dim
