@@ -1,0 +1,231 @@
+#
+# wm independent hotkeys
+#
+
+# terminal emulator
+super + Return
+	kitty
+
+# fireshot
+super + Print
+	flameshot gui
+
+# rofi locate
+super + l
+	xdg-open "$(locate home media | rofi -threads 0 -width 100 -dmenu -i -p "locate:")"
+# rofi locate
+super + @space
+	rofi -show drun -show-icons -drun-icon-theme Papirus
+# rofi-wifi
+super + n
+	/home/narmis/.dotfiles/rofi/scripts/wifi-menu.sh
+
+# rofi-powermenu
+super + x
+	/home/narmis/.config/rofi/powermenu/type-2/powermenu.sh
+
+# rofi
+super + space
+	/home/narmis/.config/rofi/launchers/type-1/launcher.sh
+
+# firefox
+super + w
+	firefox-beta
+
+#file browser
+super + shift + a
+	rofi -show file-browser-extended [ -file-browser-dir /home/narmis/ ] [ -file-browser-cmd /bin/termite ]
+
+# volume control
+XF86AudioLowerVolume
+	~/.local/bin/volume_brightness.sh volume_down	
+
+XF86AudioRaiseVolume
+	~/.local/bin/volume_brightness.sh volume_up
+
+XF86AudioMute
+	~/.local/bin/volume_brightness.sh volume_mute
+
+# brightness
+XF86MonBrightness{Up,Down}  
+	~/.local/bin/volume_brightness.sh {brightness_up, brightness_down}  
+
+# media controls
+shift + XF86AudioPlay
+	playerctl play-pause
+
+shift + XF86AudioStop
+	playerctl stop
+
+shift + XF86AudioNext
+	playerctl next
+
+shift + XF86AudioPrev
+	playerctl previous
+
+
+# mpd media controls
+XF86AudioPlay
+	mpc toggle
+
+XF86AudioStop
+	mpc stop
+
+XF86AudioNext
+	mpc next
+
+XF86AudioPrev
+	mpc prev
+
+# battery
+super + b
+	/home/narmis/.local/bin/battery.sh
+
+# nautilus
+super + a
+	thunar
+
+# make sxhkd reload ets configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# colourpicker
+super + c
+	colorpicker --short --one-shot | xsel -b
+
+# lockscreen
+alt + shift + x
+    betterlockscreen -l dim
+
+# add to scratchpad
+super + shift + s
+  bspad hide
+
+# cycle scratchpad
+super + z
+  bspad toggle
+
+# cycle scratchpad
+super + shift + z
+  bspad cycle
+
+# gomuks
+super + g
+  kitty -e gomuks
+#
+# bspwm hotkeys
+#
+
+# quit/restart bspwm
+super + alt + {q,r}
+	bspc {quit,wm -r}
+
+# close and kill
+super + {_,shift + }q
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+# send the newest marked node to the newest preselected node
+super + y
+	bspc node newest.marked.local -n newest.!automatic.local
+
+# swap the current node and the biggest window
+super + shift + g
+	bspc node -s biggest.window
+
+#
+# state/flags
+#
+
+# set the window state
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+#
+# focus/swap
+#
+
+# focus the node in the given direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# focus the node for the given path jump
+#super + {p,b,comma,period}
+#	bspc node -f @{parent,brother,first,second}
+
+# focus the next/previous window in the current desktop
+super + {grave,Tab}
+	bspc node -f {next,prev}.local.!hidden.window
+
+# focus the next/previous desktop in the current monitor
+super + bracket{left,right}
+	bspc desktop -f {prev,next}.local
+
+# focus the last node/desktop
+#super + {grave,Tab}
+#	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+super + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+# focus or send to the given desktop
+super + {1-9,0}
+	bspc desktop -f '^{1-9,10}'
+
+# shift and focus
+super + shift + {1-9}
+    id=$(bspc query -N -n); bspc node -d ^{1-9}; bspc node -f ${id}
+
+# scroll
+super + button{4,5}
+	bspc desktop -f {prev,next}
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move a floating window
+super + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# scratchpad
+alt + Return
+	./~/.local/bin/scripts/scpad
