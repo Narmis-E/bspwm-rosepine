@@ -1,4 +1,4 @@
-# bspwm-rosepine
+# bspwm-rosepine [![awesome-rice-badge](https://raw.githubusercontent.com/zemmsoares/awesome-rices/main/assets/awesome-rice-badge.svg)](https://github.com/zemmsoares/awesome-rices)
 My bspwm rice dedicated to the lovely rosepine theme
 
 ![rosepine1](https://github.com/Narmis-E/bspwm-rosepine/assets/109248529/bed7a533-9bde-4430-a978-81541fc49533)
